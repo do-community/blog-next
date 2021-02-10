@@ -8,11 +8,12 @@ export async function getStaticPaths() {
   const url = process.env.API_URL;
   const res = await fetch(`${url}/posts`);
   const posts = await res.json();
-  const paths = posts.map((post) => ({
+  
+  const paths = !posts ? [] : posts.map((post) => ({
     params: { slug: post.slug },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps(context) {
